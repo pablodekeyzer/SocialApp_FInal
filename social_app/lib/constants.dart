@@ -21,6 +21,12 @@ TextStyle userText = TextStyle(
     fontSize: 18,
     fontFamily: mainFont,
     fontWeight: FontWeight.w700);
+
+TextStyle bigUserText = TextStyle(
+    color: darkBlu,
+    fontSize: 25,
+    fontFamily: mainFont,
+    fontWeight: FontWeight.w700);
 TextStyle descText = TextStyle(
   color: greyGrey,
   fontSize: 12,

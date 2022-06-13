@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:social_app/Widgets/createpost.dart';
 import 'package:social_app/Widgets/post.dart';
+
+import '../constants.dart';
 
 class Feed extends StatefulWidget {
   String? userId;
@@ -119,7 +122,27 @@ userPosts(id: $userPostsId) {
                 );
               } else if (index == 0 && widget.userId != null) {
                 //TODO user picture and title
-                return Container();
+                return Center(
+                  child: Column(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: CircleAvatar(
+                              radius: 35.0,
+                              backgroundImage: CachedNetworkImageProvider(
+                                  posts[0]['user']['img']))),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            posts[0]['user']['displayname'] ?? '',
+                            style: bigUserText,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
               }
 
               final post = posts[index - 1];
