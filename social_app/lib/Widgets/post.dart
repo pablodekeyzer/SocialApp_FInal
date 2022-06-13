@@ -55,13 +55,11 @@ class _PostState extends State<Post> {
   TextEditingController postTextController = TextEditingController();
 
   late Uint8List imagedata;
-  late int imageL;
+  late String id;
   @override
   void initState() {
+    id = widget.postdata['_id'];
     imagedata = Uint8List.fromList(widget.postdata['img'].codeUnits);
-    //i use length to know if the image is different from the previous
-    imageL = imagedata.length;
-    //keep track of first lines of the imagedata, so we can compare it to the new data to rerender the image
     showCommentInput = widget.openComments;
     likeCount = widget.postdata['likeCount'];
     likes = widget.postdata['likes'];
@@ -71,12 +69,13 @@ class _PostState extends State<Post> {
 
   @override
   void didUpdateWidget(covariant Post oldWidget) {
-    if (imageL == Uint8List.fromList(widget.postdata['img'].codeUnits).length) {
-    } else {
-      print('1:' + imageL.toString());
-      print(Uint8List.fromList(widget.postdata['img'].codeUnits).length);
+    if (id != widget.postdata['_id']) {
+      id = widget.postdata['_id'];
       imagedata = Uint8List.fromList(widget.postdata['img'].codeUnits);
-      imageL = imagedata.length;
+      showCommentInput = widget.openComments;
+      likeCount = widget.postdata['likeCount'];
+      likes = widget.postdata['likes'];
+      commentCount = widget.postdata['commentCount'];
     }
     super.didUpdateWidget(oldWidget);
   }
@@ -203,13 +202,16 @@ class _PostState extends State<Post> {
                                 : const Icon(Icons.favorite_border),
                             onPressed: () {
                               //already change data so we dont need to wait for the result
-                              if (likes.contains(user?.email)) {
-                                likes.remove(user?.email);
-                                likeCount--;
-                              } else {
-                                likes.add(user?.email);
-                                likeCount++;
-                              }
+
+                              setState(() {
+                                if (likes.contains(user?.email)) {
+                                  likes.remove(user?.email);
+                                  likeCount--;
+                                } else {
+                                  likes.add(user?.email);
+                                  likeCount++;
+                                }
+                              });
 
                               runMutation({
                                 "id": widget.postdata['_id'],

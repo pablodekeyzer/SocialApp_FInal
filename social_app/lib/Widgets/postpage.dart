@@ -3,6 +3,8 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:social_app/Widgets/commentSection.dart';
 import 'package:social_app/Widgets/post.dart';
 
+import '../constants.dart';
+
 class PostPage extends StatefulWidget {
   Map<String, dynamic> postdata;
   VoidCallback? refetchCallBack;
@@ -56,7 +58,12 @@ query Post($postId: ID!) {
 
     return SafeArea(
         child: Scaffold(
-      extendBody: true,
+      appBar: AppBar(
+        title: const Text('Post'),
+        foregroundColor: wit,
+        backgroundColor: darkBlu,
+        centerTitle: true,
+      ),
       body: Query(
           options: QueryOptions(document: gql(readPost), variables: {
             "postId": postData!['_id']
