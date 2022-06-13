@@ -121,7 +121,6 @@ userPosts(id: $userPostsId) {
                   refetchCallBack: refetch,
                 );
               } else if (index == 0 && widget.userId != null) {
-                //TODO user picture and title
                 return Center(
                   child: Column(
                     children: [

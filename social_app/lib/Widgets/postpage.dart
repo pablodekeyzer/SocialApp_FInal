@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:social_app/Widgets/commentSection.dart';
+import 'package:social_app/Widgets/commentsection.dart';
 import 'package:social_app/Widgets/post.dart';
 
 import '../constants.dart';
