@@ -32,8 +32,8 @@ class Post extends StatefulWidget {
 class _PostState extends State<Post> {
   GoogleSignInAccount? user = GoogleSignApi().getUser;
   String addLike = r'''
-  mutation AddLike($addLikeId: ID!, $input: AddLike!) {
-    addLike(id: $addLikeId, input: $input) {
+  mutation AddLike($id: ID!, $input: AddLike!) {
+    addLike(id: $id, input: $input) {
       likes
       likeCount
     }
@@ -196,7 +196,7 @@ class _PostState extends State<Post> {
                               }
 
                               runMutation({
-                                "addLikeId": widget.postdata['_id'],
+                                "id": widget.postdata['_id'],
                                 "input": {
                                   'userid': user?.email,
                                 }
