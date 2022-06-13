@@ -1,4 +1,4 @@
-# SocialApp_FInal
+# SocialApp
 
 ## Instalatie instructies:
 
