@@ -39,6 +39,7 @@ class _CreatePostState extends State<CreatePost> {
   String fd = "";
   List l = [];
   GoogleSignInAccount? user = GoogleSignApi().getUser;
+  bool isUploading = false;
 
   Future pickFile() async {
     FilePickerResult? result = await FilePicker.platform
@@ -112,11 +113,12 @@ class _CreatePostState extends State<CreatePost> {
             fd.isEmpty
                 ? Container()
                 : Container(
-                    constraints: const BoxConstraints(maxHeight: 450),
+                    constraints:
+                        const BoxConstraints(maxHeight: 450, minHeight: 100),
                     child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 10.0),
-                        child: Center(child: Image.memory(fileBytes!))),
+                        child: Image.memory(fileBytes!)),
                   ),
             //row for uploading gifs/imgaes
             Padding(
@@ -143,6 +145,7 @@ class _CreatePostState extends State<CreatePost> {
                           onCompleted: (dynamic resultData) {
                             widget.refetchCallBack!();
                             setState(() {
+                              isUploading = false;
                               fd = "";
                               postTextController.text = "";
                             });
@@ -152,17 +155,24 @@ class _CreatePostState extends State<CreatePost> {
                           RunMutation runMutation,
                           QueryResult? result,
                         ) {
-                          return TextButton.icon(
-                              onPressed: (() async => {runMutation(toJson())}),
-                              icon: const Text('Publish',
-                                  style: TextStyle(
-                                      fontSize: 14, color: darkYello)),
-                              label: const Center(
-                                child: Icon(
-                                  Icons.send_rounded,
+                          return isUploading
+                              ? const CircularProgressIndicator(
                                   color: darkYello,
-                                ),
-                              ));
+                                )
+                              : TextButton.icon(
+                                  onPressed: (() async => {
+                                        isUploading = true,
+                                        runMutation(toJson())
+                                      }),
+                                  icon: const Text('Publish',
+                                      style: TextStyle(
+                                          fontSize: 14, color: darkYello)),
+                                  label: const Center(
+                                    child: Icon(
+                                      Icons.send_rounded,
+                                      color: darkYello,
+                                    ),
+                                  ));
                         }),
                   ]),
             ),

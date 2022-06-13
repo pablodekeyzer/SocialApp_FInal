@@ -8,7 +8,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 void main() async {
   await initHiveForFlutter();
   final HttpLink httpLink = HttpLink(
-    'http://localhost:4000/',
+    'https://qraph-ql-server.herokuapp.com/',
   );
 
   ValueNotifier<GraphQLClient> client = ValueNotifier(

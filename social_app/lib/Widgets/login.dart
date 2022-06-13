@@ -63,6 +63,16 @@ class _LoginPageState extends State<LoginPage> {
                 QueryResult? result,
               ) {
                 return ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(darkBlu),
+                    foregroundColor: MaterialStateProperty.all(wit),
+                    textStyle: MaterialStateProperty.all(
+                      const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                   onPressed: () async {
                     await signIn();
                     runMutation({

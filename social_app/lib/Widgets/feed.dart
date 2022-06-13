@@ -94,7 +94,8 @@ userPosts(id: $userPostsId) {
             child: CircularProgressIndicator(),
           );
         }
-        late List posts;
+
+        List posts = [];
         if (widget.userId == null) {
           posts = result.data?['posts'];
         } else {
@@ -102,7 +103,7 @@ userPosts(id: $userPostsId) {
         }
 
         if (posts.isEmpty) {
-          return const Text('Loading');
+          //return const Text('Loading');
         }
 
         if (firstload) {

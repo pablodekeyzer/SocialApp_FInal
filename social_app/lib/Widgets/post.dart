@@ -55,14 +55,30 @@ class _PostState extends State<Post> {
   TextEditingController postTextController = TextEditingController();
 
   late Uint8List imagedata;
+  late int imageL;
   @override
   void initState() {
-    super.initState();
-    showCommentInput = widget.openComments;
     imagedata = Uint8List.fromList(widget.postdata['img'].codeUnits);
+    //i use length to know if the image is different from the previous
+    imageL = imagedata.length;
+    //keep track of first lines of the imagedata, so we can compare it to the new data to rerender the image
+    showCommentInput = widget.openComments;
     likeCount = widget.postdata['likeCount'];
     likes = widget.postdata['likes'];
     commentCount = widget.postdata['commentCount'];
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant Post oldWidget) {
+    if (imageL == Uint8List.fromList(widget.postdata['img'].codeUnits).length) {
+    } else {
+      print('1:' + imageL.toString());
+      print(Uint8List.fromList(widget.postdata['img'].codeUnits).length);
+      imagedata = Uint8List.fromList(widget.postdata['img'].codeUnits);
+      imageL = imagedata.length;
+    }
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
